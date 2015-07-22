@@ -11,7 +11,7 @@ Please see the test function for the expected return format
 
 import xlrd
 from zipfile import ZipFile
-datafile = "2013_ERCOT_Hourly_Load_Data.xls"
+datafile = "2013_ERCOT_Hourly_Load_Data"
 
 
 def open_zip(datafile):
@@ -20,11 +20,11 @@ def open_zip(datafile):
 
 
 def parse_file(datafile):
-    workbook = xlrd.open_workbook(datafile)
+    workbook = xlrd.open_workbook('{0}.xls'.format(datafile))
     sheet = workbook.sheet_by_index(0)
 
     ### example on how you can get the data
-    #sheet_data = [[sheet.cell_value(r, col) for col in range(sheet.ncols)] for r in range(sheet.nrows)]
+    sheet_data = [[sheet.cell_value(r, col) for col in range(sheet.ncols)] for r in range(sheet.nrows)]
 
     ### other useful methods:
     # print "\nROWS, COLUMNS, and CELLS:"
@@ -36,7 +36,11 @@ def parse_file(datafile):
     # print sheet.cell_value(3, 2)
     # print "Get a slice of values in column 3, from rows 1-3:"
     # print sheet.col_values(3, start_rowx=1, end_rowx=4)
-
+    coasts = zip(sheet.col_values(0, start_rowx=1),
+                      sheet.col_values(1, start_rowx=1))
+    mincoast = min(coasts, key=lambda x:x[1])
+    maxcoast = max(coasts, key=lambda x:x[1])
+    
     # print "\nDATES:"
     # print "Type of data in cell (row 1, col 0):", 
     # print sheet.cell_type(1, 0)
@@ -45,13 +49,16 @@ def parse_file(datafile):
     # print exceltime
     # print "Convert time to a Python datetime tuple, from the Excel float:",
     # print xlrd.xldate_as_tuple(exceltime, 0)
-    
+    mintime = xlrd.xldate_as_tuple(mincoast[0], 0)
+    minvalue = mincoast[1]
+    maxtime = xlrd.xldate_as_tuple(maxcoast[0], 0)
+    maxvalue = maxcoast[1]
     
     data = {
-            'maxtime': (0, 0, 0, 0, 0, 0),
-            'maxvalue': 0,
-            'mintime': (0, 0, 0, 0, 0, 0),
-            'minvalue': 0,
+            'maxtime': maxtime,
+            'maxvalue': maxvalue,
+            'mintime': mintime,
+            'minvalue': minvalue,
             'avgcoast': 0
     }
     return data
