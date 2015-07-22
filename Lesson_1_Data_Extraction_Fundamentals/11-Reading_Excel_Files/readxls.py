@@ -54,12 +54,14 @@ def parse_file(datafile):
     maxtime = xlrd.xldate_as_tuple(maxcoast[0], 0)
     maxvalue = maxcoast[1]
     
+    avgcoast = sum([coast[1] for coast in coasts]) / len(coasts)
+    
     data = {
             'maxtime': maxtime,
             'maxvalue': maxvalue,
             'mintime': mintime,
             'minvalue': minvalue,
-            'avgcoast': 0
+            'avgcoast': avgcoast
     }
     return data
 
