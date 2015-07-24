@@ -38,5 +38,7 @@ nosetests.xml
 # OSX stuff
 .DS_Store
 
-.spyderproject
+.vs
+*.sln
+*.pyproj
 *.xls

@@ -38,22 +38,29 @@ def pretty_print(data, indent=4):
 
 
 def main():
-    results = query_by_name(ARTIST_URL, query_type["simple"], "Nirvana")
-    pretty_print(results)
+    data = query_by_name(ARTIST_URL, query_type["simple"], "First Aid Kit")
+    tmp = [a for a in data["artists"] if a["name"]=="First Aid Kit"]
+    result1 = len(tmp)
 
-    artist_id = results["artists"][1]["id"]
-    print "\nARTIST:"
-    pretty_print(results["artists"][1])
+    data = query_by_name(ARTIST_URL, query_type["simple"], "Queen")
+    tmp = [a for a in data["artists"] if a["name"]=="Queen"]
+    tmp = [a.get("begin-area",{}) for a in tmp]
+    tmp = [a for a in tmp if a != {} ]
+    result2 = tmp[0]["name"]
 
-    artist_data = query_site(ARTIST_URL, query_type["releases"], artist_id)
-    releases = artist_data["releases"]
-    print "\nONE RELEASE:"
-    pretty_print(releases[0], indent=2)
-    release_titles = [r["title"] for r in releases]
+    data = query_by_name(ARTIST_URL, query_type["simple"], "Beatles")
+    tmp = [a for a in data["aliases"] if a["name"]=="Beatles"]
+    print(tmp)
+#    artist_data = query_site(ARTIST_URL, query_type["releases"], artist_id)
+#    releases = artist_data["releases"]
+#    print "\nONE RELEASE:"
+#    pretty_print(releases[0], indent=2)
+#    release_titles = [r["title"] for r in releases]
+#
+#    print "\nALL TITLES:"
+#    for t in release_titles:
+#        print t
 
-    print "\nALL TITLES:"
-    for t in release_titles:
-        print t
 
 
 if __name__ == '__main__':

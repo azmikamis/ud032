@@ -1,4 +1,4 @@
-# Your task is to read the input DATAFILE line by line, and for the first 10 lines (not including the header)
+﻿# Your task is to read the input DATAFILE line by line, and for the first 10 lines (not including the header)
 # split each line on "," and then for each line, create a dictionary
 # where the key is the header title of the field, and the value is the value of that field in the row.
 # The function parse_file should return a list of dictionaries,
@@ -9,7 +9,7 @@
 # so the returned list should have 10 entries!
 import os
 
-DATADIR = ""
+DATADIR = "Lesson_1_Data_Extraction_Fundamentals\\07-Parsing_CSV_Files"
 DATAFILE = "beatles-diskography.csv"
 
 
