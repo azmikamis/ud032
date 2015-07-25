@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 """
 Your task is to process the supplied file and use the csv module to extract data from it.
 The data comes from NREL (National Renewable Energy Laboratory) website. Each file
@@ -16,7 +16,7 @@ You should only change the parse_file function.
 import csv
 import os
 
-DATADIR = ""
+DATADIR = "Lesson_1_Problem_Set\\01-Using_CSV_Module"
 DATAFILE = "745090.csv"
 
 
@@ -24,7 +24,18 @@ def parse_file(datafile):
     name = ""
     data = []
     with open(datafile,'rb') as f:
-        pass
+        description = f.readline().strip().split(',')
+        name = description[1][1:-1]
+        header = f.readline().strip().split(',')
+        for line in f:
+            values = line.strip().split(',')
+            data.append(values)
+    #Solution
+    #with open(datafile,'rb') as f:
+    #    r = csv.reader(f)
+    #    name = r.next()[1]
+    #    header = r.next()
+    #    data = [row for row in r]
     # Do not change the line below
     return (name, data)
 
