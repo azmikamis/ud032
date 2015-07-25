@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 """
 Your task is as follows:
 - read the provided Excel file
@@ -9,9 +9,11 @@ Your task is as follows:
 Please see the test function for the expected return format
 """
 
+import os
 import xlrd
 from zipfile import ZipFile
-datafile = "2013_ERCOT_Hourly_Load_Data"
+DATADIR = "Lesson_1_Data_Extraction_Fundamentals\\11-Reading_Excel_Files"
+DATAFILE = "2013_ERCOT_Hourly_Load_Data"
 
 
 def open_zip(datafile):
@@ -20,7 +22,7 @@ def open_zip(datafile):
 
 
 def parse_file(datafile):
-    workbook = xlrd.open_workbook('{0}.xls'.format(datafile))
+    workbook = xlrd.open_workbook('{0}.xls'.format(os.path.basename(datafile)))
     sheet = workbook.sheet_by_index(0)
 
     ### example on how you can get the data
@@ -67,6 +69,7 @@ def parse_file(datafile):
 
 
 def test():
+    datafile = os.path.join(DATADIR, DATAFILE)
     open_zip(datafile)
     data = parse_file(datafile)
 
