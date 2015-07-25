@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 # Your task here is to extract data from xml on authors of an article
 # and add it to a list, one item for an author.
 # See the provided data structure for the expected format.
@@ -6,8 +6,10 @@
 # to the dictionary keys, but you have to extract the attributes from the "insr" tag
 # and add them to the list for the dictionary key "insr"
 import xml.etree.ElementTree as ET
+import os
 
-article_file = "exampleResearchArticle.xml"
+article_dir = "Lesson_2_Data_in_More_Complex_Formats\\08-Handling_Attributes"
+article_file = os.path.join(article_dir, "exampleResearchArticle.xml")
 
 
 def get_root(fname):
@@ -25,7 +27,10 @@ def get_authors(root):
                 "insr": []
         }
 
-        # YOUR CODE HERE
+        data["fnm"] = author.find('./fnm').text
+        data["snm"] = author.find('./snm').text
+        data["email"] = author.find('./email').text
+        data["insr"] = [i.attrib['iid'] for i in author.findall('./insr')]
 
         authors.append(data)
 
