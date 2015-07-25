@@ -1,4 +1,4 @@
-# To experiment with this code freely you will have to run this code locally.
+﻿# To experiment with this code freely you will have to run this code locally.
 # We have provided an example json output here for you to look at,
 # but you will not be able to run any queries through our UI.
 import json
@@ -38,29 +38,43 @@ def pretty_print(data, indent=4):
 
 
 def main():
+    print("How many bands named 'First Aid Kit'?")
     data = query_by_name(ARTIST_URL, query_type["simple"], "First Aid Kit")
-    tmp = [a for a in data["artists"] if a["name"]=="First Aid Kit"]
-    result1 = len(tmp)
+    artists = [a for a in data["artists"] if a["name"]=="First Aid Kit"]
+    print(len(artists))
 
+    print("Begin-area name for Queen")
     data = query_by_name(ARTIST_URL, query_type["simple"], "Queen")
-    tmp = [a for a in data["artists"] if a["name"]=="Queen"]
-    tmp = [a.get("begin-area",{}) for a in tmp]
-    tmp = [a for a in tmp if a != {} ]
-    result2 = tmp[0]["name"]
+    artists = [a for a in data["artists"] if a["name"]=="Queen"]
+    artist_id = artists[0]["id"]
+    artist_data = query_site(ARTIST_URL, query_type["simple"], artist_id)
+    beginarea = artist_data["begin_area"]
+    print(beginarea["name"])
 
+    print("Spanish alias for Beatles")
     data = query_by_name(ARTIST_URL, query_type["simple"], "Beatles")
-    tmp = [a for a in data["aliases"] if a["name"]=="Beatles"]
-    print(tmp)
-#    artist_data = query_site(ARTIST_URL, query_type["releases"], artist_id)
-#    releases = artist_data["releases"]
-#    print "\nONE RELEASE:"
-#    pretty_print(releases[0], indent=2)
-#    release_titles = [r["title"] for r in releases]
-#
-#    print "\nALL TITLES:"
-#    for t in release_titles:
-#        print t
+    artists = [a for a in data["artists"] if a["name"]=="The Beatles"]
+    artist_id = artists[0]["id"]
+    artist_data = query_site(ARTIST_URL, query_type["aliases"], artist_id)
+    aliases = artist_data["aliases"]
+    spanishalias = [a for a in aliases if a["locale"]=="es"][0]["name"]
+    print(spanishalias)
 
+    print("Nirvana disambiguation")
+    data = query_by_name(ARTIST_URL, query_type["simple"], "Nirvana")
+    artists = [a for a in data["artists"] if a["name"]=="Nirvana"]
+    artist_id = artists[0]["id"]
+    artist_data = query_site(ARTIST_URL, query_type["simple"], artist_id)
+    disambiguation = artist_data["disambiguation"]
+    print(disambiguation)
+
+    print("When was One Direction formed")
+    data = query_by_name(ARTIST_URL, query_type["simple"], "One Direction")
+    artists = [a for a in data["artists"] if a["name"]=="One Direction"]
+    artist_id = artists[0]["id"]
+    artist_data = query_site(ARTIST_URL, query_type["simple"], artist_id)
+    formed = artist_data["life-span"]["begin"]
+    print(formed)
 
 
 if __name__ == '__main__':
