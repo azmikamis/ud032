@@ -47,7 +47,16 @@ def article_overview(kind, period):
         for m in _:
             md = m['media-metadata']
             urls.extend(s['url'] for s in md if s['format']=='Standard Thumbnail')
-
+    #Solution
+    #for article in data:
+    #    section = article["section"]
+    #    title = article["title"]
+    #    titles.append({section: title})
+    #    if "media" in article:
+    #        for m in article["media"]:
+    #            for mm in m["media-metadata"]:
+    #                if mm["format"] == "Standard Thumbnail":
+    #                    urls.append(mm["url"])
     return (titles, urls)
 
 
