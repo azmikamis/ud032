@@ -21,23 +21,33 @@ The rest of functions are provided for your convenience, if you want to access t
 import json
 import codecs
 import requests
+import os
+
 
 URL_MAIN = "http://api.nytimes.com/svc/"
 URL_POPULAR = URL_MAIN + "mostpopular/v2/"
-API_KEY = { "popular": "",
+API_KEY = { "popular": "111396de357986d761b8898fd0fd08a2:8:72563196",
             "article": ""}
+DATADIR = "Lesson_1_Problem_Set\\03-Wrangling_JSON"
 
 
 def get_from_file(kind, period):
-    filename = "popular-{0}-{1}.json".format(kind, period)
+    DATAFILE = "popular-{0}-{1}.json".format(kind, period)
+    filename = os.path.join(DATADIR, DATAFILE)
     with open(filename, "r") as f:
         return json.loads(f.read())
 
 
 def article_overview(kind, period):
     data = get_from_file(kind, period)
-    titles = []
-    urls =[]
+    titles = [{d['section']: d['title']} for d in data]
+    medias = [d['media'] for d in data if d['media']!='']
+    urls = []
+    for _ in medias:
+        for m in _:
+            md = m['media-metadata']
+            urls.extend(s['url'] for s in md if s['format']=='Standard Thumbnail')
+            pass
     # YOUR CODE HERE
 
     return (titles, urls)
