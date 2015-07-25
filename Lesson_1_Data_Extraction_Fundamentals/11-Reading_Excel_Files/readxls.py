@@ -26,7 +26,7 @@ def parse_file(datafile):
     sheet = workbook.sheet_by_index(0)
 
     ### example on how you can get the data
-    sheet_data = [[sheet.cell_value(r, col) for col in range(sheet.ncols)] for r in range(sheet.nrows)]
+    #sheet_data = [[sheet.cell_value(r, col) for col in range(sheet.ncols)] for r in range(sheet.nrows)]
 
     ### other useful methods:
     # print "\nROWS, COLUMNS, and CELLS:"
