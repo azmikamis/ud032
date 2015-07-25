@@ -47,8 +47,6 @@ def article_overview(kind, period):
         for m in _:
             md = m['media-metadata']
             urls.extend(s['url'] for s in md if s['format']=='Standard Thumbnail')
-            pass
-    # YOUR CODE HERE
 
     return (titles, urls)
 
